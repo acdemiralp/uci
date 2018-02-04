@@ -14,6 +14,9 @@ set(PROJECT_SOURCES
   cmake/import_library.cmake
   
   include/uci/uci.hpp
+  
+  license.txt
+  readme.md
 )
 include(assign_source_group)
 assign_source_group(${PROJECT_SOURCES})
