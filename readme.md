@@ -2,7 +2,7 @@
 
 The Universal Chess Interface (UCI) is an open chess communication protocol used by chess engines to communicate with graphical user interfaces.
 
-This repository contains a single header implementation of the UCI protocol (April 2006) in C++11. Requires boost::signals2.
+This repository contains a [single header implementation](include/uci/uci.hpp) of the [UCI protocol (April 2006)](docs/protocol.txt) in C++11. Requires boost::signals2.
 
 **Example Usage**
 ```cpp
