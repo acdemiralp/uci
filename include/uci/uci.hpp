@@ -10,8 +10,7 @@
 
 #include <boost/signals2.hpp>
 
-// Based on the UCI protocol at http://wbec-ridderkerk.nl/html/UCIProtocol.html 
-// Extracted from https://github.com/acdemiralp/mechanical_turk 
+// Based on the UCI protocol (April 2006). Extracted from https://github.com/acdemiralp/mechanical_turk
 class uci final
 {
 public:

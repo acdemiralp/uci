@@ -11,10 +11,9 @@ option(BUILD_TESTS "Build tests." OFF)
 set(PROJECT_SOURCES
   CMakeLists.txt
   cmake/assign_source_group.cmake
-  cmake/import_library.cmake
-  
+  cmake/import_library.cmake 
+  docs/protocol.txt
   include/uci/uci.hpp
-  
   license.txt
   readme.md
 )
