@@ -10,7 +10,7 @@ chess_engine your_engine;
 uci uci;
 
 // Register callbacks to the messages from the UI and respond appropriately.
-uci.receive_uci.connect([&]()
+uci.receive_uci.connect([&] ()
 {
   uci.send_id("Engine name", "Author name");
   uci.send_option_uci_limit_strength(false);
