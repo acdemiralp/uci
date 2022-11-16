@@ -86,9 +86,13 @@ public:
   {
     std::cout << "readyok" << std::endl;
   }
-  static void send_best_move                         (const std::string& move, const bool ponder = false)
+  static void send_best_move                         (const std::string& move, const bool ponder = false, const std::string& ponder_move = "")
   {
-    std::cout << "bestmove" << (ponder ? " ponder" : "") << std::endl;
+    std::cout << "bestmove " << move;
+    if (ponder) {
+      std::cout << " ponder " << ponder_move;
+    }
+    std::cout << std::endl;
   }
   static void send_copy_protection                   (const state state)
   {
