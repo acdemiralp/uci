@@ -4,6 +4,10 @@ The Universal Chess Interface (UCI) is an open chess communication protocol used
 
 This repository contains a [single header implementation](include/uci/uci.hpp) of the [UCI protocol (April 2006)](docs/protocol.txt) in C++11.
 
+**Important Notes**
+- Each callback (receive_*) can only have one assigned function. If you need multiple handlers, wrap them in a single lambda.
+- The callbacks use std::function and are not thread-safe. Ensure proper synchronization if callbacks are assigned or invoked from multiple threads.
+
 **Example Usage**
 ```cpp
 chess_engine your_engine;
