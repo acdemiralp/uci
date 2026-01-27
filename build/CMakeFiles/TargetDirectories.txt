@@ -1,0 +1,7 @@
+/home/runner/work/uci/uci/build/CMakeFiles/uci_.dir
+/home/runner/work/uci/uci/build/CMakeFiles/edit_cache.dir
+/home/runner/work/uci/uci/build/CMakeFiles/rebuild_cache.dir
+/home/runner/work/uci/uci/build/CMakeFiles/list_install_components.dir
+/home/runner/work/uci/uci/build/CMakeFiles/install.dir
+/home/runner/work/uci/uci/build/CMakeFiles/install/local.dir
+/home/runner/work/uci/uci/build/CMakeFiles/install/strip.dir

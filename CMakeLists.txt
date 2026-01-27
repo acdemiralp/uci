@@ -23,9 +23,6 @@ assign_source_group(${PROJECT_SOURCES})
 ##################################################  Dependencies  ##################################################
 include(import_library)
 
-find_package  (Boost REQUIRED)
-import_library(Boost_INCLUDE_DIRS)
-
 ##################################################    Targets     ##################################################
 add_library(${PROJECT_NAME} INTERFACE)
 target_include_directories(${PROJECT_NAME} INTERFACE 

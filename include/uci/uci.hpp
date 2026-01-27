@@ -2,13 +2,12 @@
 #define UCI_HPP_
 
 #include <cstddef>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include <boost/signals2.hpp>
 
 // Based on the UCI protocol (April 2006). Extracted from https://github.com/acdemiralp/mechanical_turk
 class uci final
@@ -61,17 +60,17 @@ public:
   const std::string start_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
   // UI to Engine.
-  boost::signals2::signal<void()>                                                              receive_uci         ;
-  boost::signals2::signal<void(bool on)>                                                       receive_debug       ;
-  boost::signals2::signal<void()>                                                              receive_is_ready    ;
-  boost::signals2::signal<void(            const std::string& name, const std::string& value)> receive_set_option  ;
-  boost::signals2::signal<void(bool later, const std::string& name, const std::size_t& code )> receive_register    ;
-  boost::signals2::signal<void()>                                                              receive_uci_new_game;
-  boost::signals2::signal<void(const std::string& fen, const std::vector<std::string>& moves)> receive_position    ;
-  boost::signals2::signal<void(const std::map<command, std::string>& parameters)>              receive_go          ;
-  boost::signals2::signal<void()>                                                              receive_stop        ;
-  boost::signals2::signal<void()>                                                              receive_ponder_hit  ;
-  boost::signals2::signal<void()>                                                              receive_quit        ;
+  std::function<void()>                                                              receive_uci         ;
+  std::function<void(bool on)>                                                       receive_debug       ;
+  std::function<void()>                                                              receive_is_ready    ;
+  std::function<void(            const std::string& name, const std::string& value)> receive_set_option  ;
+  std::function<void(bool later, const std::string& name, const std::size_t& code )> receive_register    ;
+  std::function<void()>                                                              receive_uci_new_game;
+  std::function<void(const std::string& fen, const std::vector<std::string>& moves)> receive_position    ;
+  std::function<void(const std::map<command, std::string>& parameters)>              receive_go          ;
+  std::function<void()>                                                              receive_stop        ;
+  std::function<void()>                                                              receive_ponder_hit  ;
+  std::function<void()>                                                              receive_quit        ;
 
   // Engine to UI.
   static void send_id                                (const std::string& name = "", const std::string& author = "")
@@ -240,16 +239,16 @@ public:
       iss >> std::skipws >> token;
       if      (token == "uci"       )
       {
-        receive_uci();
+        if (receive_uci) receive_uci();
       }
       else if (token == "debug"     )
       {
         iss >> token;
-        receive_debug(token == "on");
+        if (receive_debug) receive_debug(token == "on");
       }
       else if (token == "isready"   )
       {
-        receive_is_ready();
+        if (receive_is_ready) receive_is_ready();
       }
       else if (token == "setoption" )
       {
@@ -259,7 +258,7 @@ public:
           name  += std::string(" ", name .empty() ? 0 : 1) + token;
         while (iss >> token)
           value += std::string(" ", value.empty() ? 0 : 1) + token;
-        receive_set_option(name, value);
+        if (receive_set_option) receive_set_option(name, value);
       }
       else if (token == "register"  )
       {
@@ -274,11 +273,11 @@ public:
             name += std::string(" ", name.empty() ? 0 : 1) + token;
         if (token == "code")
           iss >> code;
-        receive_register(later, name, code);
+        if (receive_register) receive_register(later, name, code);
       }
       else if (token == "ucinewgame")
       {
-        receive_uci_new_game();
+        if (receive_uci_new_game) receive_uci_new_game();
       }
       else if (token == "position"  )
       {
@@ -297,7 +296,7 @@ public:
           continue;
         while (iss >> token)
           moves.push_back(token);
-        receive_position(fen, moves);
+        if (receive_position) receive_position(fen, moves);
       }
       else if (token == "go"        )
       {
@@ -328,19 +327,19 @@ public:
             iss >> commands[command::move_time      ];
           else if (token == "infinite"   )
             commands[command::infinite];
-        receive_go(commands);
+        if (receive_go) receive_go(commands);
       }
       else if (token == "stop"      )
       {
-        receive_stop();
+        if (receive_stop) receive_stop();
       }
       else if (token == "ponderhit" )
       {
-        receive_ponder_hit();
+        if (receive_ponder_hit) receive_ponder_hit();
       }
       else if (token == "quit"      )
       {
-        receive_quit();
+        if (receive_quit) receive_quit();
         running = false;
       }
       else
