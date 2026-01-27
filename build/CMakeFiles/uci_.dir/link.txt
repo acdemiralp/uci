@@ -1,2 +1,0 @@
-/usr/bin/ar qc libuci_.a
-/usr/bin/ranlib libuci_.a
